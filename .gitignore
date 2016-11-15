@@ -8,3 +8,7 @@
 /crtfix/Release
 /crtfix/x64/Release
 /crtfix/crtfix.vcxproj.user
+/test/bin/test.pdb
+/test/bin/test.ipdb
+/test/bin/test.iobj
+/test/Release
