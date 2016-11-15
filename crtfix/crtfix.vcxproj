@@ -31,6 +31,12 @@
   <ItemGroup>
     <ClInclude Include="crtfix.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\readme.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{70145ED2-0776-4259-8524-C710EE9B0D12}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
