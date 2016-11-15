@@ -3,3 +3,8 @@
 ################################################################################
 
 /.vs
+/3rd
+/crtfix/.vs/crtfix/v14
+/crtfix/Release
+/crtfix/x64/Release
+/crtfix/crtfix.vcxproj.user
