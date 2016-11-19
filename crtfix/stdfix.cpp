@@ -302,24 +302,34 @@ namespace std
 
 	static _Init_locks initlocks;
 
+	void __cdecl _lock_locales() { }
+	void __cdecl _unlock_locales() { }
+
 	__thiscall _Lockit::_Lockit()
 		: _Locktype(0)
 
 	{
-		_Mtxlock(&mtx[0]);
+		if (_Locktype == _LOCK_LOCALE)
+			_lock_locales();
+		else
+			_Mtxlock(&mtx[0]);
 	}
 
 	__thiscall _Lockit::_Lockit(int kind)
 		: _Locktype(kind & (MAX_LOCK - 1))
 	{
-		if (_Locktype < MAX_LOCK)
+		if (_Locktype == _LOCK_LOCALE)
+			_lock_locales();
+		else if (_Locktype < MAX_LOCK)
 			_Mtxlock(&mtx[_Locktype]);
 	}
 
 	__thiscall _Lockit::~_Lockit()
 	{
-		if (_Locktype < MAX_LOCK)
-			_Mtxlock(&mtx[_Locktype]);
+		if (_Locktype == _LOCK_LOCALE)
+			_unlock_locales();
+		else if (_Locktype < MAX_LOCK)
+			_Mtxunlock(&mtx[_Locktype]);
 	}
 
 	bool __cdecl uncaught_exception()
@@ -390,8 +400,8 @@ char const* __cdecl __std_type_info_name(__std_type_info_data* const data, __typ
 		nullptr,
 		data->_DecoratedName + 1,
 		0,
-		[](size_t const n) { return _malloc_crt(n); },
-		[](void*  const p) { return _free_crt(p);   },
+		[](UINT const n) { return _malloc_crt(n); },
+		[](PVOID const p) { return _free_crt(p);   },
 		UNDNAME_32_BIT_DECODE | UNDNAME_TYPE_ONLY));
 
 	if (!undecorated_name)
@@ -441,7 +451,6 @@ char const* __cdecl __std_type_info_name(__std_type_info_data* const data, __typ
 	return node_string;
 }
 
-
 void __cdecl __std_exception_copy(
 	__std_exception_data const* const from,
 	__std_exception_data*       const to
@@ -449,14 +458,21 @@ void __cdecl __std_exception_copy(
 {
 	_ASSERTE(to->_What == nullptr && to->_DoFree == false);
 
-	if (!from->_DoFree || !from->_What)
-	{
+	if (!from->_DoFree || !from->_What){
 		to->_What = from->_What;
 		to->_DoFree = false;
-	} else {
-		to->_What = "unknown exception";
-		to->_DoFree = false;
+		return;
 	}
+
+	size_t const buffer_count = strlen(from->_What) + 1;
+	__crt_unique_heap_ptr<char, __crt_public_free_policy> buffer(static_cast<char*>(malloc(buffer_count)));
+	if (!buffer){
+		return;
+	}
+
+	strcpy_s(buffer.get(), buffer_count, from->_What);
+	to->_What = buffer.detach();
+	to->_DoFree = true;
 }
 
 void __cdecl __std_exception_destroy(
