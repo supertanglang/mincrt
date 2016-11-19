@@ -49,3 +49,4 @@ EXCEPTION_DISPOSITION __CxxFrameHandler3(void *pExcept, void *pRN, void *pContex
 {
 	return __CxxFrameHandler(pExcept, pRN, pContext, pDC);
 }
+

@@ -27,6 +27,7 @@
     <ClCompile Include="stdfix.cpp" />
     <ClCompile Include="thrfix.c" />
     <ClCompile Include="time.cpp" />
+    <ClCompile Include="xlocal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="crtfix.h" />
