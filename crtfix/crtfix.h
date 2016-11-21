@@ -75,6 +75,8 @@ typedef struct _Cvtvec
 {	/* stuff needed by _Mbrtowc, etc. */
 	unsigned long _Hand;	// LCID
 	unsigned int _Page;		// UINT
+	int _Isclocale;	// LCID == _CLOCALEHANDLE
+	unsigned char _Isleadbyte[32];	// 256 bits
 } _Cvtvec;
 
 #define _CLOCALEHANDLE  0       /* "C" locale handle */

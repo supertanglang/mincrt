@@ -83,10 +83,21 @@ int __CRTDECL sprintf_s(_Out_writes_z_(_BufferCount)  char* const _Buffer, _In_ 
 	int len;
 	va_list args;
 	__crt_va_start(args, _Format);
-	len = vsprintf(_Buffer, _Format, args);
+	len = vsnprintf(_Buffer, _BufferCount,_Format, args);
 	__crt_va_end(args);
 	return len;
 }
+
+int __CRTDECL snprintf(_Out_writes_z_(_BufferCount)  char* const _Buffer, _In_ size_t const _BufferCount, _In_z_ _Printf_format_string_ char const* const _Format, ...)
+{
+	int len;
+	va_list args;
+	__crt_va_start(args, _Format);
+	len = vsnprintf(_Buffer, _BufferCount, _Format, args);
+	__crt_va_end(args);
+	return len;
+}
+
 
 //
 int __CRTDECL _Tolower(int c, const _Ctypevec *ploc)
@@ -239,7 +250,7 @@ int __CRTDECL _Toupper(int c, const _Ctypevec *ploc)
 _Ctypevec __CRTDECL _Getctype()
 {
 	/* get ctype info for current locale */
-	_Ctypevec ctype;
+	_Ctypevec ctype = {0};
 
 	ctype._Hand = ___lc_handle_func()[LC_COLLATE];
 	ctype._Page = ___lc_codepage_func();
@@ -259,7 +270,7 @@ _Ctypevec __CRTDECL _Getctype()
 
 _Cvtvec __CRTDECL _Getcvt()
 {
-	_Cvtvec cvt;
+	_Cvtvec cvt = {0};
 	cvt._Hand = ___lc_handle_func()[LC_CTYPE];
 	cvt._Page = ___lc_codepage_func();
 	return (cvt);

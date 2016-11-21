@@ -9,6 +9,12 @@ _ACRTIMP errno_t __cdecl _localtime64_s(_Out_ struct tm* _Tm, _In_  __time64_t c
 	return 0;
 }
 
+_Check_return_wat_
+_ACRTIMP struct tm* __cdecl _localtime32(_In_ __time32_t const* _Time)
+{
+	return localtime((const time_t*)_Time);
+}
+
 _Check_return_wat_ 
 _ACRTIMP errno_t __cdecl _localtime32_s(_Out_ struct tm* _Tm, _In_  __time32_t const* _Time)
 {
