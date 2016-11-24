@@ -107,9 +107,19 @@ int __CRTDECL swprintf_s(_Out_writes_z_(_BufferCount) wchar_t* const _Buffer, _I
 	int len;
 	va_list args;
 	__crt_va_start(args, _Format);
-	len = vswprintf(_Buffer, _BufferCount, _Format, args);
+	len = _vsnwprintf(_Buffer, _BufferCount, _Format, args);
 	__crt_va_end(args);
 	return len;
+}
+
+int __CRTDECL vswprintf_s(_Out_writes_z_(_BufferCount) wchar_t* const _Buffer, _In_ size_t const _BufferCount, _In_z_ _Printf_format_string_ wchar_t const* const _Format, va_list _ArgList)
+{
+	return _vsnwprintf(_Buffer, _BufferCount, _Format, _ArgList);
+}
+
+int __CRTDECL _vswprintf(_Pre_notnull_ _Post_z_ wchar_t* const _Buffer, _In_z_ _Printf_format_string_ wchar_t const* const _Format, va_list _ArgList)
+{
+	return vswprintf(_Buffer, _Format, _ArgList);
 }
 
 //

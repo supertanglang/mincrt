@@ -1237,7 +1237,7 @@ _Success_(return >= 0)
 _Check_return_opt_
 _CRT_STDIO_INLINE int __CRTDECL vswprintf(
     _Pre_notnull_ _Post_z_                  wchar_t*       const _Buffer,
-    _In_                                    size_t         const _BufferCount,
+//  _In_                                    size_t         const _BufferCount, /* vc6.0 define */
     _In_z_ _Printf_format_string_params_(1) wchar_t const* const _Format,
                                             va_list              _ArgList
     )
