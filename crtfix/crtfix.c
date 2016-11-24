@@ -50,3 +50,7 @@ EXCEPTION_DISPOSITION __CxxFrameHandler3(void *pExcept, void *pRN, void *pContex
 	return __CxxFrameHandler(pExcept, pRN, pContext, pDC);
 }
 
+void _invalid_parameter_noinfo(void)
+{
+	__noop;
+}

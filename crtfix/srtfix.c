@@ -78,6 +78,11 @@ int __CRTDECL _vsnprintf_s(_Out_writes_z_(_BufferCount) char* const _Buffer, _In
 	return _vsnprintf(_Buffer, _BufferCount, _Format, _ArgList);
 }
 
+int __CRTDECL vsprintf_s(_Out_writes_z_(_BufferCount) char* const _Buffer, _In_ size_t const _BufferCount, _In_z_ _Printf_format_string_ char const* const _Format, va_list _ArgList)
+{
+	return _vsnprintf(_Buffer, _BufferCount, _Format, _ArgList);
+}
+
 int __CRTDECL sprintf_s(_Out_writes_z_(_BufferCount)  char* const _Buffer, _In_ size_t const _BufferCount, _In_z_ _Printf_format_string_ char const* const _Format, ...)
 {
 	int len;
@@ -97,7 +102,15 @@ int __CRTDECL snprintf(_Out_writes_z_(_BufferCount)  char* const _Buffer, _In_ s
 	__crt_va_end(args);
 	return len;
 }
-
+int __CRTDECL swprintf_s(_Out_writes_z_(_BufferCount) wchar_t* const _Buffer, _In_ size_t const _BufferCount, _In_z_ _Printf_format_string_ wchar_t const* const _Format, ...)
+{
+	int len;
+	va_list args;
+	__crt_va_start(args, _Format);
+	len = vswprintf(_Buffer, _BufferCount, _Format, args);
+	__crt_va_end(args);
+	return len;
+}
 
 //
 int __CRTDECL _Tolower(int c, const _Ctypevec *ploc)

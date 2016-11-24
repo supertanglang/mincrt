@@ -337,6 +337,12 @@ namespace std
 		return false;
 	}
 
+	void __cdecl _Throw_Cpp_error(int code)
+	{
+		_CSTD fputs("error!", stderr);
+		_CSTD abort();
+	}
+
 }
 
 //export

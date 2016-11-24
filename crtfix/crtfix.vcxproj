@@ -95,9 +95,9 @@
     <TargetName>msvcrt_fix</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(WindowsSdk_71A_IncludePath);$(VSInstallDir)VC\atlmfc\include;../inc/;../</IncludePath>
     <OutDir>../lib/$(PlatformTarget)/</OutDir>
     <TargetName>msvcrt_fix</TargetName>
+    <IncludePath>$(WindowsSdk_71A_IncludePath);$(VSInstallDir)VC\atlmfc\include;../inc/;../</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>msvcrt_fix</TargetName>
